@@ -1,0 +1,227 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://myapp.appspot.com/_ah/api",
+  "name" : "productendpoint",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "https://myapp.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "ownerDomain" : "adroit.com",
+  "ownerName" : "adroit.com",
+  "packagePath" : "easygrocer",
+  "methods" : {
+    "productendpoint.getProduct" : {
+      "path" : "product/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.adroit.easygrocer.ProductEndpoint.getProduct",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "productendpoint.insertProduct" : {
+      "path" : "product",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.adroit.easygrocer.ProductEndpoint.insertProduct",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "productendpoint.listProduct" : {
+      "path" : "product",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.adroit.easygrocer.ProductEndpoint.listProduct",
+      "request" : {
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "productendpoint.updateProduct" : {
+      "path" : "product",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.adroit.easygrocer.ProductEndpoint.updateProduct",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "productendpoint.removeProduct" : {
+      "path" : "product/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.adroit.easygrocer.ProductEndpoint.removeProduct",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "Product" : {
+        "id" : "Product",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "image" : {
+            "type" : "string"
+          },
+          "brand" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "originalPrice" : {
+            "type" : "integer"
+          },
+          "discountPrice" : {
+            "type" : "integer"
+          },
+          "producWeight" : {
+            "type" : "integer"
+          },
+          "discountPercentage" : {
+            "type" : "integer"
+          },
+          "subCategoryId" : {
+            "type" : "integer"
+          },
+          "nutritionalValue" : {
+            "type" : "string"
+          },
+          "productSoldNo" : {
+            "type" : "integer"
+          },
+          "veg" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "CollectionResponse_Product" : {
+        "id" : "CollectionResponse_Product",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Product"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.adroit.easygrocer.ProductEndpoint.getProduct" : {
+        "response" : {
+          "$ref" : "Product"
+        }
+      },
+      "com.adroit.easygrocer.ProductEndpoint.insertProduct" : {
+        "request" : {
+          "$ref" : "Product"
+        },
+        "response" : {
+          "$ref" : "Product"
+        }
+      },
+      "com.adroit.easygrocer.ProductEndpoint.listProduct" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Product"
+        }
+      },
+      "com.adroit.easygrocer.ProductEndpoint.updateProduct" : {
+        "request" : {
+          "$ref" : "Product"
+        },
+        "response" : {
+          "$ref" : "Product"
+        }
+      },
+      "com.adroit.easygrocer.ProductEndpoint.removeProduct" : {
+      }
+    }
+  }
+}

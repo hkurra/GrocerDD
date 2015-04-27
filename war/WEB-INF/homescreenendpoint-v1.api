@@ -1,0 +1,173 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://myapp.appspot.com/_ah/api",
+  "name" : "homescreenendpoint",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "https://myapp.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "ownerDomain" : "adroit.com",
+  "ownerName" : "adroit.com",
+  "packagePath" : "easygrocer",
+  "methods" : {
+    "homescreenendpoint.removeHomeScreen" : {
+      "path" : "homescreen/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.adroit.easygrocer.HomeScreenEndpoint.removeHomeScreen",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "homescreenendpoint.getHomeScreen" : {
+      "path" : "homescreen",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.adroit.easygrocer.HomeScreenEndpoint.getHomeScreen",
+      "request" : {
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "HomeScreen" : {
+        "id" : "HomeScreen",
+        "type" : "object",
+        "properties" : {
+          "topProducts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Product"
+            }
+          },
+          "discountProducts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Product"
+            }
+          },
+          "categories" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Category"
+            }
+          },
+          "bannerProducts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Product"
+            }
+          }
+        }
+      },
+      "Product" : {
+        "id" : "Product",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "image" : {
+            "type" : "string"
+          },
+          "brand" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "originalPrice" : {
+            "type" : "integer"
+          },
+          "discountPrice" : {
+            "type" : "integer"
+          },
+          "producWeight" : {
+            "type" : "integer"
+          },
+          "discountPercentage" : {
+            "type" : "integer"
+          },
+          "subCategoryId" : {
+            "type" : "integer"
+          },
+          "nutritionalValue" : {
+            "type" : "string"
+          },
+          "productSoldNo" : {
+            "type" : "integer"
+          },
+          "veg" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "Category" : {
+        "id" : "Category",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "imageURL" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.adroit.easygrocer.HomeScreenEndpoint.removeHomeScreen" : {
+      },
+      "com.adroit.easygrocer.HomeScreenEndpoint.getHomeScreen" : {
+        "response" : {
+          "$ref" : "HomeScreen"
+        }
+      }
+    }
+  }
+}
