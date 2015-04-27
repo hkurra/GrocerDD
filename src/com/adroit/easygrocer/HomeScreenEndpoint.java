@@ -40,8 +40,22 @@ public class HomeScreenEndpoint {
 	 */
 	@ApiMethod(name = "getHomeScreen")
 	public HomeScreen getHomeScreen() {
-		HomeScreen homescreen = null;
-
+		HomeScreen homescreen = new HomeScreen();
+			ProductEndpoint pend = new ProductEndpoint();
+			List<Product> products = (List<Product>) pend.listProduct(null, 500).getItems();
+			
+			for (Product p: products) {
+				if (p.getType().equals(Product.Type.discounted)) {
+					homescreen.getDiscountProducts().add(p);
+				}
+				if (p.getType().equals(Product.Type.populer)) {
+					homescreen.getTopProducts().add(p);
+				}
+			}
+			
+			CategoryEndpoint cend = new CategoryEndpoint();
+			List<Category> categories = (List<Category>) cend.listCategory(null, 500).getItems();
+			homescreen.setCategories(categories);
 		return homescreen;
 	}
 

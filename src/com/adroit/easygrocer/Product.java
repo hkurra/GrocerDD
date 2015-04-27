@@ -5,6 +5,29 @@ import javax.persistence.Entity;
 @Entity
 public class Product {
 
+	enum Type {
+		discounted,
+		populer
+	}
+	public static String undefinedConst = "undefined"; 
+	public Product() {
+		setId(undefinedConst);
+		setName(undefinedConst);
+		setImage(undefinedConst);
+		setBrand(undefinedConst);
+		setCategory(undefinedConst);
+		setDescription(undefinedConst);
+		setOriginalPrice(-1);
+		setDiscountPrice(-1);
+		isVeg = false;
+		setProducWeight(-1);
+		setDiscountPercentage(-1);
+		setSubCategoryId(-1);
+		setNutritionalValue(undefinedConst);
+		setProductSoldNo(-1);
+		setType(Type.discounted);
+	}
+	
 	private String id;
 	
 	private String name;
@@ -18,21 +41,23 @@ public class Product {
 	
 	private String description;
 	
-	private int originalPrice;
+	private long originalPrice;
 	
-	private int discountPrice;
+	private long discountPrice;
 	
 	private boolean isVeg;
 	
-	private int producWeight;
+	private long producWeight;
 	
-	private int discountPercentage;
+	private long discountPercentage;
 	
-	private int subCategoryId;
+	private long subCategoryId;
 	
 	private String nutritionalValue;
 	
-	private int productSoldNo;
+	private long productSoldNo;
+	
+	private Type type; 
 
 	public String getId() {
 		return id;
@@ -82,19 +107,19 @@ public class Product {
 		this.description = description;
 	}
 
-	public int getOriginalPrice() {
+	public long getOriginalPrice() {
 		return originalPrice;
 	}
 
-	public void setOriginalPrice(int originalPrice) {
+	public void setOriginalPrice(long originalPrice) {
 		this.originalPrice = originalPrice;
 	}
 
-	public int getDiscountPrice() {
+	public long getDiscountPrice() {
 		return discountPrice;
 	}
 
-	public void setDiscountPrice(int discountPrice) {
+	public void setDiscountPrice(long discountPrice) {
 		this.discountPrice = discountPrice;
 	}
 
@@ -106,27 +131,27 @@ public class Product {
 		this.isVeg = isVeg;
 	}
 
-	public int getProducWeight() {
+	public long getProducWeight() {
 		return producWeight;
 	}
 
-	public void setProducWeight(int producWeight) {
+	public void setProducWeight(long producWeight) {
 		this.producWeight = producWeight;
 	}
 
-	public int getDiscountPercentage() {
+	public long getDiscountPercentage() {
 		return discountPercentage;
 	}
 
-	public void setDiscountPercentage(int discountPercentage) {
+	public void setDiscountPercentage(long discountPercentage) {
 		this.discountPercentage = discountPercentage;
 	}
 
-	public int getSubCategoryId() {
+	public long getSubCategoryId() {
 		return subCategoryId;
 	}
 
-	public void setSubCategoryId(int subCategoryId) {
+	public void setSubCategoryId(long subCategoryId) {
 		this.subCategoryId = subCategoryId;
 	}
 
@@ -138,12 +163,26 @@ public class Product {
 		this.nutritionalValue = nutritionalValue;
 	}
 
-	public int getProductSoldNo() {
+	public long getProductSoldNo() {
 		return productSoldNo;
 	}
 
-	public void setProductSoldNo(int productSoldNo) {
+	public void setProductSoldNo(long productSoldNo) {
 		this.productSoldNo = productSoldNo;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public Type getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(Type type) {
+		this.type = type;
 	}
 	
 }

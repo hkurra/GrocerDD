@@ -1,14 +1,20 @@
 package com.adroit.easygrocer;
 
 import com.adroit.easygrocer.EMF;
-
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.QueryResultList;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -17,6 +23,9 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import util.ServiceConstant;
+import util.productUtility;
 
 @Api(name = "categoryendpoint", namespace = @ApiNamespace(ownerDomain = "adroit.com", ownerName = "adroit.com", packagePath = "easygrocer"))
 public class CategoryEndpoint {
@@ -34,38 +43,34 @@ public class CategoryEndpoint {
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
 
-		EntityManager mgr = null;
-		Cursor cursor = null;
-		List<Category> execute = null;
+		if (limit == null || limit == 0) {
+			  limit = 100;
+		  }
+		  
+	    List<Category> execute = new ArrayList<Category>();
+	    
+	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-		try {
-			mgr = getEntityManager();
-			Query query = mgr.createQuery("select from Category as Category");
-			if (cursorString != null && cursorString != "") {
-				cursor = Cursor.fromWebSafeString(cursorString);
-				query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
-			}
+		com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(ServiceConstant.CATEGORY_ENTITY);
+		
+		FetchOptions fetchOptions = FetchOptions.Builder.withLimit(limit);
+		
+		if (cursorString != null) {
+		      fetchOptions.startCursor(Cursor.fromWebSafeString(cursorString));
+		    }
+		
+		PreparedQuery pq = datastore.prepare(q);
+		QueryResultList<Entity> results = pq.asQueryResultList(fetchOptions);
 
-			if (limit != null) {
-				query.setFirstResult(0);
-				query.setMaxResults(limit);
-			}
+		Cursor  cursor = results.getCursor();//toWebSafeString();
+		execute  = productUtility.entitiesToCategory(results);
+		String cursorString1 = cursor != null && execute.size() == limit? cursor.toWebSafeString() : null;
+		
 
-			execute = (List<Category>) query.getResultList();
-			cursor = JPACursorHelper.getCursor(execute);
-			if (cursor != null)
-				cursorString = cursor.toWebSafeString();
-
-			// Tight loop for fetching all entities from datastore and accomodate
-			// for lazy fetch.
-			for (Category obj : execute)
-				;
-		} finally {
-			mgr.close();
-		}
-
-		return CollectionResponse.<Category> builder().setItems(execute)
-				.setNextPageToken(cursorString).build();
+	    return CollectionResponse.<Category>builder()
+	      .setItems(execute)
+	      .setNextPageToken(cursorString1)
+	      .build();
 	}
 
 	/**
@@ -76,14 +81,8 @@ public class CategoryEndpoint {
 	 */
 	@ApiMethod(name = "getCategory")
 	public Category getCategory(@Named("id") Long id) {
-		EntityManager mgr = getEntityManager();
-		Category category = null;
-		try {
-			category = mgr.find(Category.class, id);
-		} finally {
-			mgr.close();
-		}
-		return category;
+
+		return null;
 	}
 
 	/**
@@ -96,16 +95,27 @@ public class CategoryEndpoint {
 	 */
 	@ApiMethod(name = "insertCategory")
 	public Category insertCategory(Category category) {
-		EntityManager mgr = getEntityManager();
-		try {
-			if (containsCategory(category)) {
-				throw new EntityExistsException("Object already exists");
-			}
-			mgr.persist(category);
-		} finally {
-			mgr.close();
+
+		Category p = new Category();
+		if (category.getId()== null || category.getId().isEmpty()) {
+			return null;
 		}
-		return category;
+		  
+		  if(category.getId() != null) {
+			  p.setId(category.getId());
+		  }
+		  if(category.getName() != null) {
+			  p.setName(category.getName());
+		  }
+		  if(category.getImageURL() != null) {
+			  p.setImageURL(category.getImageURL());
+		  }
+		  
+		  
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		datastore.put(productUtility.categoryToEntity(p));
+		
+		return p;
 	}
 
 	/**
@@ -118,16 +128,8 @@ public class CategoryEndpoint {
 	 */
 	@ApiMethod(name = "updateCategory")
 	public Category updateCategory(Category category) {
-		EntityManager mgr = getEntityManager();
-		try {
-			if (!containsCategory(category)) {
-				throw new EntityNotFoundException("Object does not exist");
-			}
-			mgr.persist(category);
-		} finally {
-			mgr.close();
-		}
-		return category;
+
+		return null;
 	}
 
 	/**
@@ -138,31 +140,7 @@ public class CategoryEndpoint {
 	 */
 	@ApiMethod(name = "removeCategory")
 	public void removeCategory(@Named("id") Long id) {
-		EntityManager mgr = getEntityManager();
-		try {
-			Category category = mgr.find(Category.class, id);
-			mgr.remove(category);
-		} finally {
-			mgr.close();
-		}
-	}
 
-	private boolean containsCategory(Category category) {
-		EntityManager mgr = getEntityManager();
-		boolean contains = true;
-		try {
-			Category item = mgr.find(Category.class, category.getId());
-			if (item == null) {
-				contains = false;
-			}
-		} finally {
-			mgr.close();
-		}
-		return contains;
-	}
-
-	private static EntityManager getEntityManager() {
-		return EMF.get().createEntityManager();
 	}
 
 }

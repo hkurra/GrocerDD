@@ -1,14 +1,22 @@
 package com.adroit.easygrocer;
 
 import com.adroit.easygrocer.EMF;
-
+import com.adroit.easygrocer.Product.Type;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.QueryResultList;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -17,6 +25,10 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import util.ServiceConstant;
+import util.productUtility;
+
 
 @Api(name = "productendpoint", namespace = @ApiNamespace(ownerDomain = "adroit.com", ownerName = "adroit.com", packagePath = "easygrocer"))
 public class ProductEndpoint {
@@ -34,38 +46,33 @@ public class ProductEndpoint {
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
 
-		EntityManager mgr = null;
-		Cursor cursor = null;
-		List<Product> execute = null;
+		  if (limit == null || limit == 0) {
+			  limit = 100;
+		  }
+		  
+	    List<Product> execute = new ArrayList<Product>();
+	    
+	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-		try {
-			mgr = getEntityManager();
-			Query query = mgr.createQuery("select from Product as Product");
-			if (cursorString != null && cursorString != "") {
-				cursor = Cursor.fromWebSafeString(cursorString);
-				query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
-			}
+		com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(ServiceConstant.PRODUCT_ENTITY);
+		
+		FetchOptions fetchOptions = FetchOptions.Builder.withLimit(limit);
+		
+		if (cursorString != null) {
+		      fetchOptions.startCursor(Cursor.fromWebSafeString(cursorString));
+		    }
+		
+		PreparedQuery pq = datastore.prepare(q);
+		QueryResultList<Entity> results = pq.asQueryResultList(fetchOptions);
 
-			if (limit != null) {
-				query.setFirstResult(0);
-				query.setMaxResults(limit);
-			}
-
-			execute = (List<Product>) query.getResultList();
-			cursor = JPACursorHelper.getCursor(execute);
-			if (cursor != null)
-				cursorString = cursor.toWebSafeString();
-
-			// Tight loop for fetching all entities from datastore and accomodate
-			// for lazy fetch.
-			for (Product obj : execute)
-				;
-		} finally {
-			mgr.close();
-		}
-
-		return CollectionResponse.<Product> builder().setItems(execute)
-				.setNextPageToken(cursorString).build();
+		Cursor  cursor = results.getCursor();
+		execute  = productUtility.entitiesToProducts(results);
+		String cursorString1 = cursor != null && execute.size() == limit? cursor.toWebSafeString() : null;
+		
+	    return CollectionResponse.<Product>builder()
+	      .setItems(execute)
+	      .setNextPageToken(cursorString1)
+	      .build();
 	}
 
 	/**
@@ -76,13 +83,8 @@ public class ProductEndpoint {
 	 */
 	@ApiMethod(name = "getProduct")
 	public Product getProduct(@Named("id") Long id) {
-		EntityManager mgr = getEntityManager();
 		Product product = null;
-		try {
-			product = mgr.find(Product.class, id);
-		} finally {
-			mgr.close();
-		}
+
 		return product;
 	}
 
@@ -96,16 +98,59 @@ public class ProductEndpoint {
 	 */
 	@ApiMethod(name = "insertProduct")
 	public Product insertProduct(Product product) {
-		EntityManager mgr = getEntityManager();
-		try {
-			if (containsProduct(product)) {
-				throw new EntityExistsException("Object already exists");
-			}
-			mgr.persist(product);
-		} finally {
-			mgr.close();
+
+		Product p = new Product();
+		if (product.getId()== null || product.getId().isEmpty()) {
+			return null;
 		}
-		return product;
+		  
+		  if(product.getId() != null) {
+			  p.setId(product.getId());
+		  }
+		  if(product.getName() != null) {
+			  p.setName(product.getName());
+		  }
+		  if(product.getImage() != null) {
+			  p.setImage(product.getImage());
+		  }
+		  if(product.getBrand() != null) {
+			  p.setBrand(product.getBrand());
+		  }
+		  if(product.getCategory() != null) {
+			  p.setCategory(product.getCategory());
+		  }
+		  if(product.getDescription() != null) {
+			  p.setDescription(product.getDescription());
+		  }
+		  if(product.getOriginalPrice() != 0) {
+			  p.setOriginalPrice(product.getOriginalPrice());
+		  }
+		  if(product.getDiscountPrice() != 0 ) {
+			  p.setDiscountPrice(product.getDiscountPrice());
+		  }
+		  if(product.getProducWeight() != 0) {
+			  p.setProducWeight(product.getProducWeight());
+		  }
+		  if(product.getDiscountPercentage() != 0) {
+			  p.setDiscountPercentage(product.getDiscountPercentage());
+		  }
+		  if(product.getSubCategoryId() != 0) {
+			  p.setSubCategoryId(product.getSubCategoryId());
+		  }
+		  if(product.getNutritionalValue() != null ) {
+			  p.setNutritionalValue(product.getNutritionalValue());
+		  }
+		  if(product.getType() != null ) {
+			  p.setType(product.getType());
+		  }
+		  if(product.getProductSoldNo() != 0 ) {
+			  p.setProductSoldNo(product.getProductSoldNo());
+		  }
+		  
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		datastore.put(productUtility.productToEntity(p));
+		
+		return p;
 	}
 
 	/**
@@ -118,15 +163,7 @@ public class ProductEndpoint {
 	 */
 	@ApiMethod(name = "updateProduct")
 	public Product updateProduct(Product product) {
-		EntityManager mgr = getEntityManager();
-		try {
-			if (!containsProduct(product)) {
-				throw new EntityNotFoundException("Object does not exist");
-			}
-			mgr.persist(product);
-		} finally {
-			mgr.close();
-		}
+
 		return product;
 	}
 
@@ -138,31 +175,6 @@ public class ProductEndpoint {
 	 */
 	@ApiMethod(name = "removeProduct")
 	public void removeProduct(@Named("id") Long id) {
-		EntityManager mgr = getEntityManager();
-		try {
-			Product product = mgr.find(Product.class, id);
-			mgr.remove(product);
-		} finally {
-			mgr.close();
-		}
-	}
-
-	private boolean containsProduct(Product product) {
-		EntityManager mgr = getEntityManager();
-		boolean contains = true;
-		try {
-			Product item = mgr.find(Product.class, product.getId());
-			if (item == null) {
-				contains = false;
-			}
-		} finally {
-			mgr.close();
-		}
-		return contains;
-	}
-
-	private static EntityManager getEntityManager() {
-		return EMF.get().createEntityManager();
 	}
 
 }

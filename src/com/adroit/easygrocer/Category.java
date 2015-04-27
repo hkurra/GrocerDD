@@ -2,6 +2,10 @@ package com.adroit.easygrocer;
 
 import javax.persistence.Entity;
 
+import util.productUtility;
+
+import com.google.appengine.api.appidentity.AppIdentityServicePb.PublicCertificate;
+
 @Entity
 public class Category {
 
@@ -10,6 +14,12 @@ public class Category {
 	private String name;
 	
 	private String imageURL;
+	
+	public Category() {
+		Id = Product.undefinedConst;
+		name = Product.undefinedConst;
+		imageURL = Product.undefinedConst;
+	}
 
 	public String getId() {
 		return Id;
