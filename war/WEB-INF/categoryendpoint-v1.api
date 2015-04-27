@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://myapp.appspot.com/_ah/api",
+  "root" : "https://easy-grocer-dd.appspot.com/_ah/api",
   "name" : "categoryendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://myapp.appspot.com/_ah/spi",
+    "bns" : "https://easy-grocer-dd.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -27,14 +27,14 @@
   "ownerName" : "adroit.com",
   "packagePath" : "easygrocer",
   "methods" : {
-    "categoryendpoint.getCategory" : {
+    "categoryendpoint.removeCategory" : {
       "path" : "category/{id}",
-      "httpMethod" : "GET",
+      "httpMethod" : "DELETE",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.adroit.easygrocer.CategoryEndpoint.getCategory",
+      "rosyMethod" : "com.adroit.easygrocer.CategoryEndpoint.removeCategory",
       "request" : {
         "parameters" : {
           "id" : {
@@ -45,23 +45,7 @@
         "body" : "empty"
       },
       "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "categoryendpoint.updateCategory" : {
-      "path" : "category",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.adroit.easygrocer.CategoryEndpoint.updateCategory",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
+        "body" : "empty"
       }
     },
     "categoryendpoint.listCategory" : {
@@ -105,45 +89,46 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "categoryendpoint.removeCategory" : {
-      "path" : "category/{id}",
-      "httpMethod" : "DELETE",
+    "categoryendpoint.updateCategory" : {
+      "path" : "category",
+      "httpMethod" : "PUT",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.adroit.easygrocer.CategoryEndpoint.removeCategory",
+      "rosyMethod" : "com.adroit.easygrocer.CategoryEndpoint.updateCategory",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "categoryendpoint.getCategory" : {
+      "path" : "category/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.adroit.easygrocer.CategoryEndpoint.getCategory",
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "int64",
+            "type" : "string",
             "required" : true
           }
         },
         "body" : "empty"
       },
       "response" : {
-        "body" : "empty"
+        "body" : "autoTemplate(backendResponse)"
       }
     }
   },
   "descriptor" : {
     "schemas" : {
-      "Category" : {
-        "id" : "Category",
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string"
-          },
-          "imageURL" : {
-            "type" : "string"
-          },
-          "id" : {
-            "type" : "string"
-          }
-        }
-      },
       "CollectionResponse_Category" : {
         "id" : "CollectionResponse_Category",
         "type" : "object",
@@ -158,21 +143,34 @@
             "type" : "string"
           }
         }
+      },
+      "Category" : {
+        "id" : "Category",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "imageURL" : {
+            "type" : "string"
+          },
+          "subCategory" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Category"
+            }
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "parentCategoryID" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "methods" : {
-      "com.adroit.easygrocer.CategoryEndpoint.getCategory" : {
-        "response" : {
-          "$ref" : "Category"
-        }
-      },
-      "com.adroit.easygrocer.CategoryEndpoint.updateCategory" : {
-        "request" : {
-          "$ref" : "Category"
-        },
-        "response" : {
-          "$ref" : "Category"
-        }
+      "com.adroit.easygrocer.CategoryEndpoint.removeCategory" : {
       },
       "com.adroit.easygrocer.CategoryEndpoint.listCategory" : {
         "response" : {
@@ -187,7 +185,18 @@
           "$ref" : "Category"
         }
       },
-      "com.adroit.easygrocer.CategoryEndpoint.removeCategory" : {
+      "com.adroit.easygrocer.CategoryEndpoint.updateCategory" : {
+        "request" : {
+          "$ref" : "Category"
+        },
+        "response" : {
+          "$ref" : "Category"
+        }
+      },
+      "com.adroit.easygrocer.CategoryEndpoint.getCategory" : {
+        "response" : {
+          "$ref" : "Category"
+        }
       }
     }
   }

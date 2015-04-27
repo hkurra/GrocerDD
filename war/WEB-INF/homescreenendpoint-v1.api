@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://myapp.appspot.com/_ah/api",
+  "root" : "https://easy-grocer-dd.appspot.com/_ah/api",
   "name" : "homescreenendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://myapp.appspot.com/_ah/spi",
+    "bns" : "https://easy-grocer-dd.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -119,30 +119,44 @@
             "type" : "string"
           },
           "originalPrice" : {
-            "type" : "integer"
+            "type" : "string",
+            "format" : "int64"
           },
           "discountPrice" : {
-            "type" : "integer"
+            "type" : "string",
+            "format" : "int64"
           },
           "producWeight" : {
-            "type" : "integer"
+            "type" : "string",
+            "format" : "int64"
           },
           "discountPercentage" : {
-            "type" : "integer"
+            "type" : "string",
+            "format" : "int64"
           },
           "subCategoryId" : {
-            "type" : "integer"
+            "type" : "string",
+            "format" : "int64"
           },
           "nutritionalValue" : {
             "type" : "string"
           },
           "productSoldNo" : {
-            "type" : "integer"
+            "type" : "string",
+            "format" : "int64"
+          },
+          "type" : {
+            "$ref" : "Type"
           },
           "veg" : {
             "type" : "boolean"
           }
         }
+      },
+      "Type" : {
+        "id" : "Type",
+        "type" : "string",
+        "enum" : [ "discounted", "populer" ]
       },
       "Category" : {
         "id" : "Category",
@@ -154,7 +168,16 @@
           "imageURL" : {
             "type" : "string"
           },
+          "subCategory" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Category"
+            }
+          },
           "id" : {
+            "type" : "string"
+          },
+          "parentCategoryID" : {
             "type" : "string"
           }
         }

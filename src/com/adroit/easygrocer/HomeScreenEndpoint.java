@@ -7,10 +7,14 @@ import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
+
+import util.ServiceConstant;
 
 @Api(name = "homescreenendpoint", namespace = @ApiNamespace(ownerDomain = "adroit.com", ownerName = "adroit.com", packagePath = "easygrocer"))
 public class HomeScreenEndpoint {
@@ -45,17 +49,39 @@ public class HomeScreenEndpoint {
 			List<Product> products = (List<Product>) pend.listProduct(null, 500).getItems();
 			
 			for (Product p: products) {
-				if (p.getType().equals(Product.Type.discounted)) {
+				if (p.getType().equals(ServiceConstant.Type .discounted)) {
 					homescreen.getDiscountProducts().add(p);
 				}
-				if (p.getType().equals(Product.Type.populer)) {
+				if (p.getType().equals(ServiceConstant.Type .populer)) {
 					homescreen.getTopProducts().add(p);
 				}
 			}
 			
+			HashMap<String, List<Category>> df = new HashMap<String, List<Category>>();
 			CategoryEndpoint cend = new CategoryEndpoint();
 			List<Category> categories = (List<Category>) cend.listCategory(null, 500).getItems();
-			homescreen.setCategories(categories);
+			for (Category c : categories) {
+				if (c.getParentCategoryID().equals(Product.undefinedConst)) {
+					homescreen.getCategories().add(c);
+				}
+				else {
+					if (df.get(c.getParentCategoryID()) == null ) {
+						List<Category> category = new ArrayList<Category>();
+						category.add(c);
+						df.put(c.getParentCategoryID(), category);
+					}
+					else {
+						df.get(c.getParentCategoryID()).add(c);
+					}
+				}
+			}
+			
+			for (Category cate: homescreen.getCategories()) {
+				if (df.get(cate.getId()) != null) {
+					cate.setSubCategory(df.get(cate.getId()));
+				}
+			}
+
 		return homescreen;
 	}
 

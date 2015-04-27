@@ -2,13 +2,12 @@ package com.adroit.easygrocer;
 
 import javax.persistence.Entity;
 
+import util.ServiceConstant;
+
 @Entity
 public class Product {
 
-	enum Type {
-		discounted,
-		populer
-	}
+
 	public static String undefinedConst = "undefined"; 
 	public Product() {
 		setId(undefinedConst);
@@ -25,7 +24,7 @@ public class Product {
 		setSubCategoryId(-1);
 		setNutritionalValue(undefinedConst);
 		setProductSoldNo(-1);
-		setType(Type.discounted);
+		setType(ServiceConstant.Type.discounted);
 	}
 	
 	private String id;
@@ -57,7 +56,7 @@ public class Product {
 	
 	private long productSoldNo;
 	
-	private Type type; 
+	private ServiceConstant.Type  type; 
 
 	public String getId() {
 		return id;
@@ -174,14 +173,14 @@ public class Product {
 	/**
 	 * @return the type
 	 */
-	public Type getType() {
+	public ServiceConstant.Type getType() {
 		return type;
 	}
 
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(Type type) {
+	public void setType(ServiceConstant.Type  type) {
 		this.type = type;
 	}
 	

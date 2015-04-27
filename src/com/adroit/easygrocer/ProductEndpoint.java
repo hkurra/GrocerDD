@@ -1,7 +1,5 @@
 package com.adroit.easygrocer;
 
-import com.adroit.easygrocer.EMF;
-import com.adroit.easygrocer.Product.Type;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -11,20 +9,19 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.QueryResultList;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.datanucleus.query.JPACursorHelper;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import util.ServiceConstant;
 import util.productUtility;
@@ -80,12 +77,30 @@ public class ProductEndpoint {
 	 *
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
+	 * @throws Exception 
 	 */
 	@ApiMethod(name = "getProduct")
-	public Product getProduct(@Named("id") Long id) {
+	public Product getProduct(@Named("id") String id) throws Exception {
 		Product product = null;
+		
+		if(id == null || id.isEmpty()) {
+			   throw new Exception("Invalid id");
+		  }
+	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    Key k = KeyFactory.createKey(ServiceConstant.PRODUCT_ENTITY, id);
+	    
+	    Filter keyFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL,k);
+	    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(ServiceConstant.PRODUCT_ENTITY);
+	    q.setFilter(keyFilter);
+	    List<Entity> greetings = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(1));
+	    
+		for (Entity greeting : greetings) {
+			product = productUtility.entityToProduct(greeting);
+		}
+		
+		//ArticleUtility.determineCategorey(editorialarticle, true);
+	    return product;
 
-		return product;
 	}
 
 	/**
@@ -160,11 +175,64 @@ public class ProductEndpoint {
 	 *
 	 * @param product the entity to be updated.
 	 * @return The updated entity.
+	 * @throws Exception 
 	 */
 	@ApiMethod(name = "updateProduct")
-	public Product updateProduct(Product product) {
+	public Product updateProduct(Product product) throws Exception {
 
-		return product;
+		  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		  
+		  
+		  Product p = getProduct(product.getId());
+		  if(p == null) {throw new Exception("Entity Does Not Exist");}
+		  
+		  
+		  if(product.getId() != null && !product.getId().equals(Product.undefinedConst)) {
+			  p.setId(product.getId());
+		  }
+		  if(product.getName() != null && !product.getName().equals(Product.undefinedConst)) {
+			  p.setName(product.getName());
+		  }
+		  if(product.getImage() != null && !product.getImage().equals(Product.undefinedConst)) {
+			  p.setImage(product.getImage());
+		  }
+		  if(product.getBrand() != null && !product.getBrand().equals(Product.undefinedConst)) {
+			  p.setBrand(product.getBrand());
+		  }
+		  if(product.getCategory() != null && !product.getCategory().equals(Product.undefinedConst)) {
+			  p.setCategory(product.getCategory());
+		  }
+		  if(product.getDescription() != null && !product.getDescription().equals(Product.undefinedConst)) {
+			  p.setDescription(product.getDescription());
+		  }
+		  if(product.getOriginalPrice() != -1)  {
+			  p.setOriginalPrice(product.getOriginalPrice());
+		  }
+		  if(product.getDiscountPrice() != -1) {
+			  p.setDiscountPrice(product.getDiscountPrice());
+		  }
+		  if(product.getProducWeight() != -1) {
+			  p.setProducWeight(product.getProducWeight());
+		  }
+		  if(product.getDiscountPercentage() != -1) {
+			  p.setDiscountPercentage(product.getDiscountPercentage());
+		  }
+		  if(product.getSubCategoryId() != -1) {
+			  p.setSubCategoryId(product.getSubCategoryId());
+		  }
+		  if(product.getNutritionalValue() != null && !product.getNutritionalValue().equals(Product.undefinedConst)) {
+			  p.setNutritionalValue(product.getNutritionalValue());
+		  }
+		  if(product.getType() != null && !product.getType().equals(Product.undefinedConst)) {
+			  p.setType(product.getType());
+		  }
+		  if(product.getProductSoldNo() != -1) {
+			  p.setProductSoldNo(product.getProductSoldNo());
+		  }
+		  
+		datastore.put(productUtility.productToEntity(p));
+		
+		return p;
 	}
 
 	/**
@@ -175,6 +243,7 @@ public class ProductEndpoint {
 	 */
 	@ApiMethod(name = "removeProduct")
 	public void removeProduct(@Named("id") Long id) {
+		
 	}
 
 }

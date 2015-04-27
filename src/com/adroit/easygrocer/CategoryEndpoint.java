@@ -10,8 +10,13 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.QueryResultList;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
 import java.util.ArrayList;
@@ -78,11 +83,28 @@ public class CategoryEndpoint {
 	 *
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
+	 * @throws Exception 
 	 */
 	@ApiMethod(name = "getCategory")
-	public Category getCategory(@Named("id") Long id) {
+	public Category getCategory(@Named("id") String id) throws Exception {
 
-		return null;
+		Category product = null;
+		if(id == null || id.isEmpty()) {
+			   throw new Exception("Invalid id");
+		  }
+	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    Key k = KeyFactory.createKey(ServiceConstant.CATEGORY_ENTITY, id);
+	    
+	    Filter keyFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL,k);
+	    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(ServiceConstant.CATEGORY_ENTITY);
+	    q.setFilter(keyFilter);
+	    List<Entity> greetings = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(1));
+	    
+		for (Entity greeting : greetings) {
+			product = productUtility.entityToCategory(greeting);
+		}
+		
+	    return product;
 	}
 
 	/**
@@ -96,6 +118,7 @@ public class CategoryEndpoint {
 	@ApiMethod(name = "insertCategory")
 	public Category insertCategory(Category category) {
 
+		List<Entity> categories = new ArrayList<Entity>();
 		Category p = new Category();
 		if (category.getId()== null || category.getId().isEmpty()) {
 			return null;
@@ -111,9 +134,17 @@ public class CategoryEndpoint {
 			  p.setImageURL(category.getImageURL());
 		  }
 		  
+		  categories.add(productUtility.categoryToEntity(p));
+		  if(category.getSubCategory() != null && category.getSubCategory().size() >0) {
+			  for (Category cc: category.getSubCategory()) {
+				  cc.setParentCategoryID(category.getId());
+				  categories.add(productUtility.categoryToEntity(cc));
+			  }
+		  }
+		  
 		  
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		datastore.put(productUtility.categoryToEntity(p));
+		datastore.put(categories);
 		
 		return p;
 	}
@@ -129,7 +160,30 @@ public class CategoryEndpoint {
 	@ApiMethod(name = "updateCategory")
 	public Category updateCategory(Category category) {
 
-		return null;
+		Category p = new Category();
+		if (category.getId()== null || category.getId().isEmpty()) {
+			return null;
+		}
+		  
+		  if(category.getId() != null && !category.getId().equals(Product.undefinedConst)) {
+			  p.setId(category.getId());
+		  }
+		  if(category.getName() != null && !category.getName().equals(Product.undefinedConst)) {
+			  p.setName(category.getName());
+		  }
+		  if(category.getImageURL() != null && !category.getImageURL().equals(Product.undefinedConst)) {
+			  p.setImageURL(category.getImageURL());
+		  }
+		  
+		  if(category.getSubCategory() != null && category.getSubCategory().size() >0) {
+			  p.getSubCategory().addAll(category.getSubCategory());
+		  }
+		  
+		  
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		datastore.put(productUtility.categoryToEntity(p));
+		
+		return p;
 	}
 
 	/**

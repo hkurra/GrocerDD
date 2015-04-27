@@ -1,5 +1,8 @@
 package com.adroit.easygrocer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 
 import util.productUtility;
@@ -15,10 +18,16 @@ public class Category {
 	
 	private String imageURL;
 	
+	private List<Category> subCategory;
+	
+	private String parentId ;
+	
 	public Category() {
 		Id = Product.undefinedConst;
 		name = Product.undefinedConst;
 		imageURL = Product.undefinedConst;
+		subCategory = new ArrayList<Category>();
+		setParentCategoryID(Product.undefinedConst);
 	}
 
 	public String getId() {
@@ -45,6 +54,28 @@ public class Category {
 		this.imageURL = imageURL;
 	}
 	
+	/**
+	 * @return the subCategory
+	 */
+	public List<Category>  getSubCategory() {
+		return subCategory;
+	}
+
+	/**
+	 * @param subCategory the subCategory to set
+	 */
+	public void setSubCategory(List<Category>  subCategory) {
+		this.subCategory = subCategory;
+	}
+
+	public String getParentCategoryID() {
+		return parentId;
+	}
+
+	public void setParentCategoryID(String subCategoryID) {
+		this.parentId = subCategoryID;
+	}
+
 	@Entity
 	public class subCategory extends Category {
 		

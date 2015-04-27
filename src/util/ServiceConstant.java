@@ -18,10 +18,18 @@ public class ServiceConstant {
 	public static String SUB_CATEGORY_ID = "subCategoryId";
 	public static String NUTRITIONAL_VALUE = "nutritionalValue";
 	public static String P_SOLD_NUMBER = "soldQuantity";
+	public static String P_TYPE = "pType";
 	
 	//Category related
 	public static String CATEGORY_ENTITY = "categoryEntity";
 	public static String CATEGORY_ID = "c_ID";
 	public static String CATEGORY_NAME = "c_Name";
 	public static String C_IMAGE_URL = "c_ImageURL";
+	public static String C_PARENT_ID = "c_ParentId";
+	
+	public enum Type {
+		discounted,
+		populer
+	}
+			
 }

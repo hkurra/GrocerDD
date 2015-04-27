@@ -35,6 +35,7 @@ public class productUtility {
 			entity.setProperty(ServiceConstant.SUB_CATEGORY_ID, product.getSubCategoryId());
 			entity.setProperty(ServiceConstant.NUTRITIONAL_VALUE, product.getNutritionalValue());
 			entity.setProperty(ServiceConstant.P_SOLD_NUMBER, product.getProductSoldNo());
+			entity.setProperty(ServiceConstant.P_TYPE, product.getType().toString());
 			
 		} catch (Exception e) {
 			//TODO mail this problem
@@ -62,6 +63,7 @@ public class productUtility {
 		product.setSubCategoryId((long)entity.getProperty(ServiceConstant.SUB_CATEGORY_ID));
 		product.setNutritionalValue(entity.getProperty(ServiceConstant.NUTRITIONAL_VALUE).toString());
 		product.setProductSoldNo((long)entity.getProperty(ServiceConstant.P_SOLD_NUMBER));
+		product.setType(ServiceConstant.Type.valueOf(entity.getProperty(ServiceConstant.P_TYPE).toString()));
 		
 		return product;
 	}
@@ -73,6 +75,8 @@ public class productUtility {
 			entity.setProperty(ServiceConstant.CATEGORY_NAME, product.getName());
 			entity.setProperty(ServiceConstant.CATEGORY_ID, product.getId());
 			entity.setProperty(ServiceConstant.C_IMAGE_URL, product.getImageURL());
+			entity.setProperty(ServiceConstant.C_PARENT_ID, product.getParentCategoryID());
+			
 		}
 		
 		catch (Exception e) {
@@ -87,6 +91,7 @@ public class productUtility {
 		product.setName(entity.getProperty(ServiceConstant.CATEGORY_NAME).toString());
 		product.setId(entity.getProperty(ServiceConstant.CATEGORY_ID).toString());
 		product.setImageURL(entity.getProperty(ServiceConstant.C_IMAGE_URL).toString());
+		product.setParentCategoryID(entity.getProperty(ServiceConstant.C_PARENT_ID).toString());
 
 		return product;
 	}
