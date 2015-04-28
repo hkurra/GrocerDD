@@ -19,6 +19,8 @@ public class ServiceConstant {
 	public static String NUTRITIONAL_VALUE = "nutritionalValue";
 	public static String P_SOLD_NUMBER = "soldQuantity";
 	public static String P_TYPE = "pType";
+	public static String P_IS_DELETED = "pIsDeleted";
+	
 	
 	//Category related
 	public static String CATEGORY_ENTITY = "categoryEntity";

@@ -12,46 +12,46 @@ import com.google.appengine.api.appidentity.AppIdentityServicePb.PublicCertifica
 @Entity
 public class Category {
 
-	private String Id;
+	private String category_id;
 	
-	private String name;
+	private String category_name;
 	
-	private String imageURL;
+	private String category_image;
 	
 	private List<Category> subCategory;
 	
 	private String parentId ;
 	
 	public Category() {
-		Id = Product.undefinedConst;
-		name = Product.undefinedConst;
-		imageURL = Product.undefinedConst;
+		category_id = Product.undefinedConst;
+		category_name = Product.undefinedConst;
+		category_image = Product.undefinedConst;
 		subCategory = new ArrayList<Category>();
 		setParentCategoryID(Product.undefinedConst);
 	}
 
 	public String getId() {
-		return Id;
+		return category_id;
 	}
 
 	public void setId(String id) {
-		Id = id;
+		category_id = id;
 	}
 
 	public String getName() {
-		return name;
+		return category_name;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.category_name = name;
 	}
 
 	public String getImageURL() {
-		return imageURL;
+		return category_image;
 	}
 
 	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
+		this.category_image = imageURL;
 	}
 	
 	/**

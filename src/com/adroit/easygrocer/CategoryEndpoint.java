@@ -24,10 +24,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import util.ServiceConstant;
 import util.productUtility;
@@ -193,8 +189,11 @@ public class CategoryEndpoint {
 	 * @param id the primary key of the entity to be deleted.
 	 */
 	@ApiMethod(name = "removeCategory")
-	public void removeCategory(@Named("id") Long id) {
+	public void removeCategory(@Named("id") String id) {
 
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    Key k = KeyFactory.createKey(ServiceConstant.CATEGORY_ENTITY, id);
+	    datastore.delete(k);
 	}
 
 }

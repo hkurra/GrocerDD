@@ -149,7 +149,7 @@ public class ProductEndpoint {
 		  if(product.getDiscountPercentage() != 0) {
 			  p.setDiscountPercentage(product.getDiscountPercentage());
 		  }
-		  if(product.getSubCategoryId() != 0) {
+		  if(product.getSubCategoryId() != null) {
 			  p.setSubCategoryId(product.getSubCategoryId());
 		  }
 		  if(product.getNutritionalValue() != null ) {
@@ -217,7 +217,7 @@ public class ProductEndpoint {
 		  if(product.getDiscountPercentage() != -1) {
 			  p.setDiscountPercentage(product.getDiscountPercentage());
 		  }
-		  if(product.getSubCategoryId() != -1) {
+		  if(product.getSubCategoryId() != null && !product.getSubCategoryId().equals(Product.undefinedConst)) {
 			  p.setSubCategoryId(product.getSubCategoryId());
 		  }
 		  if(product.getNutritionalValue() != null && !product.getNutritionalValue().equals(Product.undefinedConst)) {
@@ -242,8 +242,12 @@ public class ProductEndpoint {
 	 * @param id the primary key of the entity to be deleted.
 	 */
 	@ApiMethod(name = "removeProduct")
-	public void removeProduct(@Named("id") Long id) {
+	public void removeProduct(@Named("id") String id) {
 		
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    Key k = KeyFactory.createKey(ServiceConstant.PRODUCT_ENTITY, id);
+	    datastore.delete(k);
+	    
 	}
 
 }

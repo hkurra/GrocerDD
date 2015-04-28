@@ -36,6 +36,7 @@ public class productUtility {
 			entity.setProperty(ServiceConstant.NUTRITIONAL_VALUE, product.getNutritionalValue());
 			entity.setProperty(ServiceConstant.P_SOLD_NUMBER, product.getProductSoldNo());
 			entity.setProperty(ServiceConstant.P_TYPE, product.getType().toString());
+			entity.setProperty(ServiceConstant.P_IS_DELETED, product.is_deleted());
 			
 		} catch (Exception e) {
 			//TODO mail this problem
@@ -49,6 +50,7 @@ public class productUtility {
 		
 		String articleID = entity.getKey().getName();
 		Product product = new Product();
+		product.setId(articleID);
 		product.setName(entity.getProperty(ServiceConstant.P_NAME).toString());
 		product.setImage(entity.getProperty(ServiceConstant.P_IMAGE_URL).toString());
 		product.setBrand(entity.getProperty(ServiceConstant.P_BRAND).toString());
@@ -60,10 +62,18 @@ public class productUtility {
 		product.setVeg((boolean)entity.getProperty(ServiceConstant.IS_VEG));
 		product.setProducWeight((long)entity.getProperty(ServiceConstant.PRODUCT_WEIGHT));
 		product.setDiscountPercentage((long)entity.getProperty(ServiceConstant.DISCOUNT_PERCENTAGE));
-		product.setSubCategoryId((long)entity.getProperty(ServiceConstant.SUB_CATEGORY_ID));
+		product.setSubCategoryId(entity.getProperty(ServiceConstant.SUB_CATEGORY_ID).toString());
 		product.setNutritionalValue(entity.getProperty(ServiceConstant.NUTRITIONAL_VALUE).toString());
 		product.setProductSoldNo((long)entity.getProperty(ServiceConstant.P_SOLD_NUMBER));
 		product.setType(ServiceConstant.Type.valueOf(entity.getProperty(ServiceConstant.P_TYPE).toString()));
+		
+		Object isDeleted = entity.getProperty(ServiceConstant.P_IS_DELETED);
+		
+		if (isDeleted != null) {
+			product.setIs_deleted((boolean)isDeleted);
+		}
+		
+		
 		
 		return product;
 	}

@@ -100,29 +100,28 @@
         "id" : "Product",
         "type" : "object",
         "properties" : {
-          "id" : {
+          "description" : {
             "type" : "string"
           },
+          "is_deleted" : {
+            "type" : "boolean"
+          },
+          "type" : {
+            "$ref" : "Type"
+          },
           "name" : {
+            "type" : "string"
+          },
+          "id" : {
             "type" : "string"
           },
           "image" : {
             "type" : "string"
           },
-          "brand" : {
-            "type" : "string"
-          },
           "category" : {
             "type" : "string"
           },
-          "description" : {
-            "type" : "string"
-          },
-          "originalPrice" : {
-            "type" : "string",
-            "format" : "int64"
-          },
-          "discountPrice" : {
+          "productSoldNo" : {
             "type" : "string",
             "format" : "int64"
           },
@@ -130,25 +129,31 @@
             "type" : "string",
             "format" : "int64"
           },
-          "discountPercentage" : {
-            "type" : "string",
-            "format" : "int64"
-          },
           "subCategoryId" : {
+            "type" : "string"
+          },
+          "discountPercentage" : {
             "type" : "string",
             "format" : "int64"
           },
           "nutritionalValue" : {
             "type" : "string"
           },
-          "productSoldNo" : {
+          "discountPrice" : {
             "type" : "string",
             "format" : "int64"
           },
-          "type" : {
-            "$ref" : "Type"
+          "originalPrice" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "brand" : {
+            "type" : "string"
           },
           "veg" : {
+            "type" : "boolean"
+          },
+          "_deleted" : {
             "type" : "boolean"
           }
         }
@@ -162,19 +167,19 @@
         "id" : "Category",
         "type" : "object",
         "properties" : {
-          "name" : {
-            "type" : "string"
-          },
-          "imageURL" : {
-            "type" : "string"
-          },
           "subCategory" : {
             "type" : "array",
             "items" : {
               "$ref" : "Category"
             }
           },
+          "name" : {
+            "type" : "string"
+          },
           "id" : {
+            "type" : "string"
+          },
+          "imageURL" : {
             "type" : "string"
           },
           "parentCategoryID" : {

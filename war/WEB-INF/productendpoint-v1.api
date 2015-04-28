@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://myapp.appspot.com/_ah/api",
+  "root" : "https://easy-grocer-dd.appspot.com/_ah/api",
   "name" : "productendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://myapp.appspot.com/_ah/spi",
+    "bns" : "https://easy-grocer-dd.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -38,7 +38,7 @@
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "int64",
+            "type" : "string",
             "required" : true
           }
         },
@@ -56,6 +56,22 @@
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
       "rosyMethod" : "com.adroit.easygrocer.ProductEndpoint.insertProduct",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "productendpoint.updateProduct" : {
+      "path" : "product",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.adroit.easygrocer.ProductEndpoint.updateProduct",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -89,22 +105,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "productendpoint.updateProduct" : {
-      "path" : "product",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.adroit.easygrocer.ProductEndpoint.updateProduct",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "productendpoint.removeProduct" : {
       "path" : "product/{id}",
       "httpMethod" : "DELETE",
@@ -116,7 +116,7 @@
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "int64",
+            "type" : "string",
             "required" : true
           }
         },
@@ -133,49 +133,68 @@
         "id" : "Product",
         "type" : "object",
         "properties" : {
-          "id" : {
+          "description" : {
             "type" : "string"
           },
+          "is_deleted" : {
+            "type" : "boolean"
+          },
+          "type" : {
+            "$ref" : "Type"
+          },
           "name" : {
+            "type" : "string"
+          },
+          "id" : {
             "type" : "string"
           },
           "image" : {
             "type" : "string"
           },
-          "brand" : {
-            "type" : "string"
-          },
           "category" : {
             "type" : "string"
           },
-          "description" : {
-            "type" : "string"
-          },
-          "originalPrice" : {
-            "type" : "integer"
-          },
-          "discountPrice" : {
-            "type" : "integer"
+          "productSoldNo" : {
+            "type" : "string",
+            "format" : "int64"
           },
           "producWeight" : {
-            "type" : "integer"
-          },
-          "discountPercentage" : {
-            "type" : "integer"
+            "type" : "string",
+            "format" : "int64"
           },
           "subCategoryId" : {
-            "type" : "integer"
+            "type" : "string"
+          },
+          "discountPercentage" : {
+            "type" : "string",
+            "format" : "int64"
           },
           "nutritionalValue" : {
             "type" : "string"
           },
-          "productSoldNo" : {
-            "type" : "integer"
+          "discountPrice" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "originalPrice" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "brand" : {
+            "type" : "string"
           },
           "veg" : {
             "type" : "boolean"
+          },
+          "_deleted" : {
+            "type" : "boolean"
           }
         }
+      },
+      "Type" : {
+        "id" : "Type",
+        "type" : "string",
+        "enum" : [ "discounted", "populer" ]
       },
       "CollectionResponse_Product" : {
         "id" : "CollectionResponse_Product",
@@ -207,17 +226,17 @@
           "$ref" : "Product"
         }
       },
-      "com.adroit.easygrocer.ProductEndpoint.listProduct" : {
-        "response" : {
-          "$ref" : "CollectionResponse_Product"
-        }
-      },
       "com.adroit.easygrocer.ProductEndpoint.updateProduct" : {
         "request" : {
           "$ref" : "Product"
         },
         "response" : {
           "$ref" : "Product"
+        }
+      },
+      "com.adroit.easygrocer.ProductEndpoint.listProduct" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Product"
         }
       },
       "com.adroit.easygrocer.ProductEndpoint.removeProduct" : {
