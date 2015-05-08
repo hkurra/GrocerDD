@@ -50,7 +50,7 @@ public class HomeScreenEndpoint {
 			
 			for (Product p: products) {
 				if (p.getType().equals(ServiceConstant.Type .discounted)) {
-					homescreen.getDiscountProducts().add(p);
+					homescreen.getDiscount_products().add(p);
 				}
 				if (p.getType().equals(ServiceConstant.Type .populer)) {
 					homescreen.getTopProducts().add(p);
@@ -61,24 +61,24 @@ public class HomeScreenEndpoint {
 			CategoryEndpoint cend = new CategoryEndpoint();
 			List<Category> categories = (List<Category>) cend.listCategory(null, 500).getItems();
 			for (Category c : categories) {
-				if (c.getParentCategoryID().equals(Product.undefinedConst)) {
+				if (c.getParentId().equals(Product.undefinedConst)) {
 					homescreen.getCategories().add(c);
 				}
 				else {
-					if (df.get(c.getParentCategoryID()) == null ) {
+					if (df.get(c.getParentId()) == null ) {
 						List<Category> category = new ArrayList<Category>();
 						category.add(c);
-						df.put(c.getParentCategoryID(), category);
+						df.put(c.getParentId(), category);
 					}
 					else {
-						df.get(c.getParentCategoryID()).add(c);
+						df.get(c.getParentId()).add(c);
 					}
 				}
 			}
 			
 			for (Category cate: homescreen.getCategories()) {
-				if (df.get(cate.getId()) != null) {
-					cate.setSubCategory(df.get(cate.getId()));
+				if (df.get(cate.getCategory_id()) != null) {
+					cate.setSubCategory(df.get(cate.getCategory_id()));
 				}
 			}
 

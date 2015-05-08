@@ -10,20 +10,20 @@ public class Product {
 
 	public static String undefinedConst = "undefined"; 
 	public Product() {
-		setId(undefinedConst);
-		setName(undefinedConst);
-		setImage(undefinedConst);
-		setBrand(undefinedConst);
-		setCategory(undefinedConst);
+		setProduct_id(undefinedConst);
+		setProduct_name(undefinedConst);
+		setProduct_image(undefinedConst);
+		setProduct_brand(undefinedConst);
+		setProduct_category(undefinedConst);
 		setDescription(undefinedConst);
-		setOriginalPrice(-1);
-		setDiscountPrice(-1);
+		setOriginal_price(-1);
+		setDiscounted_price(-1);
 		is_veg = false;
-		setProducWeight(-1);
-		setDiscountPercentage(-1);
+		setProduct_weight(-1);
+		setDiscount_percentage(-1);
 		setSubCategoryId(undefinedConst);
-		setNutritionalValue(undefinedConst);
-		setProductSoldNo(-1);
+		setNutritional_value(undefinedConst);
+		setProduct_sold_number(-1);
 		setType(ServiceConstant.Type.discounted);
 		setIs_deleted(false);
 	}
@@ -61,43 +61,43 @@ public class Product {
 	
 	private ServiceConstant.Type  type; 
 
-	public String getId() {
+	public String getProduct_id() {
 		return product_id;
 	}
 
-	public void setId(String id) {
+	public void setProduct_id(String id) {
 		this.product_id = id;
 	}
 
-	public String getName() {
+	public String getProduct_name() {
 		return product_name;
 	}
 
-	public void setName(String name) {
+	public void setProduct_name(String name) {
 		this.product_name = name;
 	}
 
-	public String getImage() {
+	public String getProduct_image() {
 		return product_image;
 	}
 
-	public void setImage(String image) {
+	public void setProduct_image(String image) {
 		this.product_image = image;
 	}
 
-	public String getBrand() {
+	public String getProduct_brand() {
 		return product_brand;
 	}
 
-	public void setBrand(String brand) {
+	public void setProduct_brand(String brand) {
 		this.product_brand = brand;
 	}
 
-	public String getCategory() {
+	public String getProduct_category() {
 		return product_category;
 	}
 
-	public void setCategory(String category) {
+	public void setProduct_category(String category) {
 		this.product_category = category;
 	}
 
@@ -109,47 +109,47 @@ public class Product {
 		this.description = description;
 	}
 
-	public long getOriginalPrice() {
+	public long getOriginal_price() {
 		return original_price;
 	}
 
-	public void setOriginalPrice(long originalPrice) {
+	public void setOriginal_price(long originalPrice) {
 		this.original_price = originalPrice;
 	}
 
-	public long getDiscountPrice() {
+	public long getDiscounted_price() {
 		return discounted_price;
 	}
 
-	public void setDiscountPrice(long discountPrice) {
+	public void setDiscounted_price(long discountPrice) {
 		this.discounted_price = discountPrice;
 	}
 
-	public boolean isVeg() {
+	public boolean getIs_veg() {
 		return is_veg;
 	}
 
-	public void setVeg(boolean isVeg) {
+	public void setIs_veg(boolean isVeg) {
 		this.is_veg = isVeg;
 	}
 
-	public long getProducWeight() {
+	public long getProduct_weightt() {
 		return product_weight;
 	}
 
-	public void setProducWeight(long producWeight) {
+	public void setProduct_weight(long producWeight) {
 		this.product_weight = producWeight;
 	}
 
-	public long getDiscountPercentage() {
+	public long getDiscount_percentage() {
 		return discount_percentage;
 	}
 
-	public void setDiscountPercentage(long discountPercentage) {
+	public void setDiscount_percentage(long discountPercentage) {
 		this.discount_percentage = discountPercentage;
 	}
 
-	public String getSubCategoryId() {
+	public String getProduct_subcategory() {
 		return product_subcategory;
 	}
 
@@ -157,19 +157,19 @@ public class Product {
 		this.product_subcategory = subCategoryId;
 	}
 
-	public String getNutritionalValue() {
+	public String getNutritional_value() {
 		return nutritional_value;
 	}
 
-	public void setNutritionalValue(String nutritionalValue) {
+	public void setNutritional_value(String nutritionalValue) {
 		this.nutritional_value = nutritionalValue;
 	}
 
-	public long getProductSoldNo() {
+	public long getProduct_sold_number() {
 		return product_sold_number;
 	}
 
-	public void setProductSoldNo(long productSoldNo) {
+	public void setProduct_sold_number(long productSoldNo) {
 		this.product_sold_number = productSoldNo;
 	}
 
@@ -187,7 +187,7 @@ public class Product {
 		this.type = type;
 	}
 
-	public boolean is_deleted() {
+	public boolean getIs_deleted() {
 		return is_deleted;
 	}
 

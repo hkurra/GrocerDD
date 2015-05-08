@@ -115,51 +115,51 @@ public class ProductEndpoint {
 	public Product insertProduct(Product product) {
 
 		Product p = new Product();
-		if (product.getId()== null || product.getId().isEmpty()) {
+		if (product.getProduct_id()== null || product.getProduct_id().isEmpty()) {
 			return null;
 		}
 		  
-		  if(product.getId() != null) {
-			  p.setId(product.getId());
+		  if(product.getProduct_id() != null) {
+			  p.setProduct_id(product.getProduct_id());
 		  }
-		  if(product.getName() != null) {
-			  p.setName(product.getName());
+		  if(product.getProduct_name() != null) {
+			  p.setProduct_name(product.getProduct_name());
 		  }
-		  if(product.getImage() != null) {
-			  p.setImage(product.getImage());
+		  if(product.getProduct_image() != null) {
+			  p.setProduct_image(product.getProduct_image());
 		  }
-		  if(product.getBrand() != null) {
-			  p.setBrand(product.getBrand());
+		  if(product.getProduct_brand() != null) {
+			  p.setProduct_brand(product.getProduct_brand());
 		  }
-		  if(product.getCategory() != null) {
-			  p.setCategory(product.getCategory());
+		  if(product.getProduct_category() != null) {
+			  p.setProduct_category(product.getProduct_category());
 		  }
 		  if(product.getDescription() != null) {
 			  p.setDescription(product.getDescription());
 		  }
-		  if(product.getOriginalPrice() != 0) {
-			  p.setOriginalPrice(product.getOriginalPrice());
+		  if(product.getOriginal_price() != 0) {
+			  p.setOriginal_price(product.getOriginal_price());
 		  }
-		  if(product.getDiscountPrice() != 0 ) {
-			  p.setDiscountPrice(product.getDiscountPrice());
+		  if(product.getDiscounted_price() != 0 ) {
+			  p.setDiscounted_price(product.getDiscounted_price());
 		  }
-		  if(product.getProducWeight() != 0) {
-			  p.setProducWeight(product.getProducWeight());
+		  if(product.getProduct_weightt() != 0) {
+			  p.setProduct_weight(product.getProduct_weightt());
 		  }
-		  if(product.getDiscountPercentage() != 0) {
-			  p.setDiscountPercentage(product.getDiscountPercentage());
+		  if(product.getDiscount_percentage() != 0) {
+			  p.setDiscount_percentage(product.getDiscount_percentage());
 		  }
-		  if(product.getSubCategoryId() != null) {
-			  p.setSubCategoryId(product.getSubCategoryId());
+		  if(product.getProduct_subcategory() != null) {
+			  p.setSubCategoryId(product.getProduct_subcategory());
 		  }
-		  if(product.getNutritionalValue() != null ) {
-			  p.setNutritionalValue(product.getNutritionalValue());
+		  if(product.getNutritional_value() != null ) {
+			  p.setNutritional_value(product.getNutritional_value());
 		  }
 		  if(product.getType() != null ) {
 			  p.setType(product.getType());
 		  }
-		  if(product.getProductSoldNo() != 0 ) {
-			  p.setProductSoldNo(product.getProductSoldNo());
+		  if(product.getProduct_sold_number() != 0 ) {
+			  p.setProduct_sold_number(product.getProduct_sold_number());
 		  }
 		  
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -183,51 +183,51 @@ public class ProductEndpoint {
 		  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		  
 		  
-		  Product p = getProduct(product.getId());
+		  Product p = getProduct(product.getProduct_id());
 		  if(p == null) {throw new Exception("Entity Does Not Exist");}
 		  
 		  
-		  if(product.getId() != null && !product.getId().equals(Product.undefinedConst)) {
-			  p.setId(product.getId());
+		  if(product.getProduct_id() != null && !product.getProduct_id().equals(Product.undefinedConst)) {
+			  p.setProduct_id(product.getProduct_id());
 		  }
-		  if(product.getName() != null && !product.getName().equals(Product.undefinedConst)) {
-			  p.setName(product.getName());
+		  if(product.getProduct_name() != null && !product.getProduct_name().equals(Product.undefinedConst)) {
+			  p.setProduct_name(product.getProduct_name());
 		  }
-		  if(product.getImage() != null && !product.getImage().equals(Product.undefinedConst)) {
-			  p.setImage(product.getImage());
+		  if(product.getProduct_image() != null && !product.getProduct_image().equals(Product.undefinedConst)) {
+			  p.setProduct_image(product.getProduct_image());
 		  }
-		  if(product.getBrand() != null && !product.getBrand().equals(Product.undefinedConst)) {
-			  p.setBrand(product.getBrand());
+		  if(product.getProduct_brand() != null && !product.getProduct_brand().equals(Product.undefinedConst)) {
+			  p.setProduct_brand(product.getProduct_brand());
 		  }
-		  if(product.getCategory() != null && !product.getCategory().equals(Product.undefinedConst)) {
-			  p.setCategory(product.getCategory());
+		  if(product.getProduct_category() != null && !product.getProduct_category().equals(Product.undefinedConst)) {
+			  p.setProduct_category(product.getProduct_category());
 		  }
 		  if(product.getDescription() != null && !product.getDescription().equals(Product.undefinedConst)) {
 			  p.setDescription(product.getDescription());
 		  }
-		  if(product.getOriginalPrice() != -1)  {
-			  p.setOriginalPrice(product.getOriginalPrice());
+		  if(product.getOriginal_price() != -1)  {
+			  p.setOriginal_price(product.getOriginal_price());
 		  }
-		  if(product.getDiscountPrice() != -1) {
-			  p.setDiscountPrice(product.getDiscountPrice());
+		  if(product.getDiscounted_price() != -1) {
+			  p.setDiscounted_price(product.getDiscounted_price());
 		  }
-		  if(product.getProducWeight() != -1) {
-			  p.setProducWeight(product.getProducWeight());
+		  if(product.getProduct_weightt() != -1) {
+			  p.setProduct_weight(product.getProduct_weightt());
 		  }
-		  if(product.getDiscountPercentage() != -1) {
-			  p.setDiscountPercentage(product.getDiscountPercentage());
+		  if(product.getDiscount_percentage() != -1) {
+			  p.setDiscount_percentage(product.getDiscount_percentage());
 		  }
-		  if(product.getSubCategoryId() != null && !product.getSubCategoryId().equals(Product.undefinedConst)) {
-			  p.setSubCategoryId(product.getSubCategoryId());
+		  if(product.getProduct_subcategory() != null && !product.getProduct_subcategory().equals(Product.undefinedConst)) {
+			  p.setSubCategoryId(product.getProduct_subcategory());
 		  }
-		  if(product.getNutritionalValue() != null && !product.getNutritionalValue().equals(Product.undefinedConst)) {
-			  p.setNutritionalValue(product.getNutritionalValue());
+		  if(product.getNutritional_value() != null && !product.getNutritional_value().equals(Product.undefinedConst)) {
+			  p.setNutritional_value(product.getNutritional_value());
 		  }
 		  if(product.getType() != null && !product.getType().equals(Product.undefinedConst)) {
 			  p.setType(product.getType());
 		  }
-		  if(product.getProductSoldNo() != -1) {
-			  p.setProductSoldNo(product.getProductSoldNo());
+		  if(product.getProduct_sold_number() != -1) {
+			  p.setProduct_sold_number(product.getProduct_sold_number());
 		  }
 		  
 		datastore.put(productUtility.productToEntity(p));
@@ -251,3 +251,5 @@ public class ProductEndpoint {
 	}
 
 }
+
+

@@ -8,22 +8,22 @@ import javax.persistence.Entity;
 @Entity
 public class HomeScreen {
 
-	private List<Product> topProducts = new ArrayList<Product>();
-	private List<Product> discountProducts = new ArrayList<Product>();
+	private List<Product> top_products = new ArrayList<Product>();
+	private List<Product> discount_products = new ArrayList<Product>();
 	private List<Category> categories = new ArrayList<Category>();
-	private List<Product> bannerProducts = new ArrayList<Product>();
+	private List<Product> banner_products = new ArrayList<Product>();
 	
 	public List<Product> getTopProducts() {
-		return topProducts;
+		return top_products;
 	}
-	public void setTopProducts(List<Product> topProducts) {
-		this.topProducts = topProducts;
+	public void setTop_products(List<Product> topProducts) {
+		this.top_products = topProducts;
 	}
-	public List<Product> getDiscountProducts() {
-		return discountProducts;
+	public List<Product> getDiscount_products() {
+		return discount_products;
 	}
-	public void setDiscountProducts(List<Product> discountProducts) {
-		this.discountProducts = discountProducts;
+	public void setDiscount_products(List<Product> discountProducts) {
+		this.discount_products = discountProducts;
 	}
 	public List<Category> getCategories() {
 		return categories;
@@ -31,11 +31,11 @@ public class HomeScreen {
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
-	private List<Product> getBannerProducts() {
-		return bannerProducts;
+	private List<Product> getBanner_products() {
+		return banner_products;
 	}
-	private void setBannerProducts(List<Product> bannerProducts) {
-		this.bannerProducts = bannerProducts;
+	private void setBanner_products(List<Product> bannerProducts) {
+		this.banner_products = bannerProducts;
 	}
 	
 

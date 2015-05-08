@@ -116,24 +116,24 @@ public class CategoryEndpoint {
 
 		List<Entity> categories = new ArrayList<Entity>();
 		Category p = new Category();
-		if (category.getId()== null || category.getId().isEmpty()) {
+		if (category.getCategory_id()== null || category.getCategory_id().isEmpty()) {
 			return null;
 		}
 		  
-		  if(category.getId() != null) {
-			  p.setId(category.getId());
+		  if(category.getCategory_id() != null) {
+			  p.setCategory_id(category.getCategory_id());
 		  }
-		  if(category.getName() != null) {
-			  p.setName(category.getName());
+		  if(category.getCategory_name() != null) {
+			  p.setCategory_name(category.getCategory_name());
 		  }
-		  if(category.getImageURL() != null) {
-			  p.setImageURL(category.getImageURL());
+		  if(category.getCategory_image() != null) {
+			  p.setCategory_image(category.getCategory_image());
 		  }
 		  
 		  categories.add(productUtility.categoryToEntity(p));
 		  if(category.getSubCategory() != null && category.getSubCategory().size() >0) {
 			  for (Category cc: category.getSubCategory()) {
-				  cc.setParentCategoryID(category.getId());
+				  cc.setParentId(category.getCategory_id());
 				  categories.add(productUtility.categoryToEntity(cc));
 			  }
 		  }
@@ -157,18 +157,18 @@ public class CategoryEndpoint {
 	public Category updateCategory(Category category) {
 
 		Category p = new Category();
-		if (category.getId()== null || category.getId().isEmpty()) {
+		if (category.getCategory_id()== null || category.getCategory_id().isEmpty()) {
 			return null;
 		}
 		  
-		  if(category.getId() != null && !category.getId().equals(Product.undefinedConst)) {
-			  p.setId(category.getId());
+		  if(category.getCategory_id() != null && !category.getCategory_id().equals(Product.undefinedConst)) {
+			  p.setCategory_id(category.getCategory_id());
 		  }
-		  if(category.getName() != null && !category.getName().equals(Product.undefinedConst)) {
-			  p.setName(category.getName());
+		  if(category.getCategory_name() != null && !category.getCategory_name().equals(Product.undefinedConst)) {
+			  p.setCategory_name(category.getCategory_name());
 		  }
-		  if(category.getImageURL() != null && !category.getImageURL().equals(Product.undefinedConst)) {
-			  p.setImageURL(category.getImageURL());
+		  if(category.getCategory_image() != null && !category.getCategory_image().equals(Product.undefinedConst)) {
+			  p.setCategory_image(category.getCategory_image());
 		  }
 		  
 		  if(category.getSubCategory() != null && category.getSubCategory().size() >0) {

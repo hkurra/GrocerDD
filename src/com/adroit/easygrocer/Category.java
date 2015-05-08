@@ -13,9 +13,9 @@ import com.google.appengine.api.appidentity.AppIdentityServicePb.PublicCertifica
 public class Category {
 
 	private String category_id;
-	
+
 	private String category_name;
-	
+
 	private String category_image;
 	
 	private List<Category> subCategory;
@@ -27,66 +27,46 @@ public class Category {
 		category_name = Product.undefinedConst;
 		category_image = Product.undefinedConst;
 		subCategory = new ArrayList<Category>();
-		setParentCategoryID(Product.undefinedConst);
+		parentId = (Product.undefinedConst);
 	}
-
-	public String getId() {
+	
+	public String getCategory_id() {
 		return category_id;
 	}
 
-	public void setId(String id) {
-		category_id = id;
+	public void setCategory_id(String category_id) {
+		this.category_id = category_id;
 	}
-
-	public String getName() {
+	
+	public String getCategory_name() {
 		return category_name;
 	}
 
-	public void setName(String name) {
-		this.category_name = name;
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
 	}
-
-	public String getImageURL() {
+	
+	public String getCategory_image() {
 		return category_image;
 	}
 
-	public void setImageURL(String imageURL) {
-		this.category_image = imageURL;
+	public void setCategory_image(String category_image) {
+		this.category_image = category_image;
 	}
-	
-	/**
-	 * @return the subCategory
-	 */
-	public List<Category>  getSubCategory() {
+
+	public List<Category> getSubCategory() {
 		return subCategory;
 	}
 
-	/**
-	 * @param subCategory the subCategory to set
-	 */
-	public void setSubCategory(List<Category>  subCategory) {
+	public void setSubCategory(List<Category> subCategory) {
 		this.subCategory = subCategory;
 	}
 
-	public String getParentCategoryID() {
+	public String getParentId() {
 		return parentId;
 	}
 
-	public void setParentCategoryID(String subCategoryID) {
-		this.parentId = subCategoryID;
-	}
-
-	@Entity
-	public class subCategory extends Category {
-		
-		private int subCategoryId;
-
-		public int getSubCategoryId() {
-			return subCategoryId;
-		}
-
-		public void setSubCategoryId(int subCategoryId) {
-			this.subCategoryId = subCategoryId;
-		}
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 }
