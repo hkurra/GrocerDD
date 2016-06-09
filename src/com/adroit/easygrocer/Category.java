@@ -18,7 +18,7 @@ public class Category {
 
 	private String category_image;
 	
-	private List<Category> subCategory;
+	private List<Category> sub_Category;
 	
 	private String parentId ;
 	
@@ -26,7 +26,7 @@ public class Category {
 		category_id = Product.undefinedConst;
 		category_name = Product.undefinedConst;
 		category_image = Product.undefinedConst;
-		subCategory = new ArrayList<Category>();
+		sub_Category = new ArrayList<Category>();
 		parentId = (Product.undefinedConst);
 	}
 	
@@ -54,19 +54,19 @@ public class Category {
 		this.category_image = category_image;
 	}
 
-	public List<Category> getSubCategory() {
-		return subCategory;
+	public List<Category> getSub_Category() {
+		return sub_Category;
 	}
 
-	public void setSubCategory(List<Category> subCategory) {
-		this.subCategory = subCategory;
+	public void setSub_Category(List<Category> subCategory) {
+		this.sub_Category = subCategory;
 	}
 
-	public String getParentId() {
+	public String getParent_Id() {
 		return parentId;
 	}
 
-	public void setParentId(String parentId) {
+	public void setParent_Id(String parentId) {
 		this.parentId = parentId;
 	}
 }

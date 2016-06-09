@@ -61,24 +61,24 @@ public class HomeScreenEndpoint {
 			CategoryEndpoint cend = new CategoryEndpoint();
 			List<Category> categories = (List<Category>) cend.listCategory(null, 500).getItems();
 			for (Category c : categories) {
-				if (c.getParentId().equals(Product.undefinedConst)) {
+				if (c.getParent_Id().equals(Product.undefinedConst)) {
 					homescreen.getCategories().add(c);
 				}
 				else {
-					if (df.get(c.getParentId()) == null ) {
+					if (df.get(c.getParent_Id()) == null ) {
 						List<Category> category = new ArrayList<Category>();
 						category.add(c);
-						df.put(c.getParentId(), category);
+						df.put(c.getParent_Id(), category);
 					}
 					else {
-						df.get(c.getParentId()).add(c);
+						df.get(c.getParent_Id()).add(c);
 					}
 				}
 			}
 			
 			for (Category cate: homescreen.getCategories()) {
 				if (df.get(cate.getCategory_id()) != null) {
-					cate.setSubCategory(df.get(cate.getCategory_id()));
+					cate.setSub_Category(df.get(cate.getCategory_id()));
 				}
 			}
 

@@ -85,7 +85,7 @@ public class productUtility {
 			entity.setProperty(ServiceConstant.CATEGORY_NAME, product.getCategory_name());
 			entity.setProperty(ServiceConstant.CATEGORY_ID, product.getCategory_id());
 			entity.setProperty(ServiceConstant.C_IMAGE_URL, product.getCategory_image());
-			entity.setProperty(ServiceConstant.C_PARENT_ID, product.getParentId());
+			entity.setProperty(ServiceConstant.C_PARENT_ID, product.getParent_Id());
 			
 		}
 		
@@ -101,7 +101,7 @@ public class productUtility {
 		product.setCategory_name(entity.getProperty(ServiceConstant.CATEGORY_NAME).toString());
 		product.setCategory_id(entity.getProperty(ServiceConstant.CATEGORY_ID).toString());
 		product.setCategory_image(entity.getProperty(ServiceConstant.C_IMAGE_URL).toString());
-		product.setParentId(entity.getProperty(ServiceConstant.C_PARENT_ID).toString());
+		product.setParent_Id(entity.getProperty(ServiceConstant.C_PARENT_ID).toString());
 
 		return product;
 	}

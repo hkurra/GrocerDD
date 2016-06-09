@@ -131,9 +131,9 @@ public class CategoryEndpoint {
 		  }
 		  
 		  categories.add(productUtility.categoryToEntity(p));
-		  if(category.getSubCategory() != null && category.getSubCategory().size() >0) {
-			  for (Category cc: category.getSubCategory()) {
-				  cc.setParentId(category.getCategory_id());
+		  if(category.getSub_Category() != null && category.getSub_Category().size() >0) {
+			  for (Category cc: category.getSub_Category()) {
+				  cc.setParent_Id(category.getCategory_id());
 				  categories.add(productUtility.categoryToEntity(cc));
 			  }
 		  }
@@ -171,8 +171,8 @@ public class CategoryEndpoint {
 			  p.setCategory_image(category.getCategory_image());
 		  }
 		  
-		  if(category.getSubCategory() != null && category.getSubCategory().size() >0) {
-			  p.getSubCategory().addAll(category.getSubCategory());
+		  if(category.getSub_Category() != null && category.getSub_Category().size() >0) {
+			  p.getSub_Category().addAll(category.getSub_Category());
 		  }
 		  
 		  
