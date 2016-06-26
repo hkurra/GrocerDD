@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
 body {
-  background: #e5e5e5;
+  background: #424242;
   color: #999;
 }
 h1,
@@ -48,7 +48,7 @@ a:focus {
   z-index: 99999;
 }
 #main-slider {
-  background-image: url(../images/slider-bg.jpg);
+  background-image: url(http://commondatastorage.googleapis.com/editorial-article.appspot.com/web_background.jpg);
   background-attachment: fixed;
   background-size: cover;
   background-position: 50% 50%;
@@ -155,7 +155,7 @@ a:focus {
 }
 .box {
   padding: 50px 30px;
-  background: #fff;
+  background: #212121 !important;
   border-bottom: 1px solid #e9e9e9;
   position: relative;
 }
@@ -459,7 +459,7 @@ a:focus {
   color: #fff;
 }
 .navbar-default {
-  background: #fff;
+  background: #212121;
   border-radius: 0 0 5px 5px;
   border: 0;
   padding: 0;
@@ -476,7 +476,7 @@ a:focus {
   margin-left: 20px;
   width: 200px;
   height: 78px;
-  background: url(../images/logo.png) no-repeat 0 50%;
+  background: url(http://commondatastorage.googleapis.com/editorial-article.appspot.com/logo.png) no-repeat 0 50%;
 }
 .navbar-default .navbar-nav > li {
   margin-left: 1px;
@@ -500,7 +500,7 @@ a:focus {
 .navbar-default .navbar-nav > li.active:hover > a:focus,
 .navbar-default .navbar-nav > li:hover > a:focus,
 .navbar-default .navbar-nav > li:focus > a:focus {
-  background-color: #52b6ec;
+  background-color: #c91414;
   color: #fff;
 }
 .icon-lg {
