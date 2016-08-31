@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
 body {
   background: #424242;
-  color: #999;
+  color: #fff;
 }
 h1,
 h2,
@@ -360,6 +360,9 @@ a:focus {
 }
 .center {
   text-align: center;
+}
+.justify {
+  text-align: justify;
 }
 #team-scroller .designation {
   margin-top: 10px;
